@@ -19,13 +19,13 @@ class Grid(val rowCount: Int, val columnCount: Int) {
   operator fun iterator(): Iterator<Cell> = GridIterator()
   inner class GridIterator(): Iterator<Cell> {
     var row = 0
-    var column = 0
+    var column = -1
     override operator fun hasNext(): Boolean = ((row != grid.size - 1) || (column != grid[row].size - 1))
     override operator fun next(): Cell {
       return when {
         column < grid[row].size - 1 -> grid[row][++column]
         row < grid.size - 1 -> {
-          column = 0;
+          column = 0
           grid[++row][column]
         }
         else -> throw IllegalStateException()

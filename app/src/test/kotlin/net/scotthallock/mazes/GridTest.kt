@@ -21,12 +21,12 @@ class GridTest {
   @Test
   fun canIterateOverGrid() {
     val grid = Grid(2, 2)
-    var atLeastOneCellVisited = false
+    var cellsVisited = 0
     for (cell: Cell in grid) {
-      atLeastOneCellVisited = true
+      cellsVisited++
       assertThat(cell).isNotNull()
     }
-    assertThat(atLeastOneCellVisited).isTrue()
+    assertThat(cellsVisited).isEqualTo(4)
   }
 
   @Test
