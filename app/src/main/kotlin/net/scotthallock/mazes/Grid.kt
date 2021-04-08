@@ -20,7 +20,7 @@ class Grid(val rowCount: Int, val columnCount: Int) {
   inner class GridIterator(): Iterator<Cell> {
     var row = 0
     var column = 0
-    override operator fun hasNext(): Boolean = ((row == grid.size - 1) && (column == grid[row].size - 1))
+    override operator fun hasNext(): Boolean = ((row != grid.size - 1) || (column != grid[row].size - 1))
     override operator fun next(): Cell {
       return when {
         column < grid[row].size - 1 -> grid[row][++column]

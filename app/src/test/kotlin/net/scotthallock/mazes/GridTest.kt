@@ -21,19 +21,28 @@ class GridTest {
   @Test
   fun canIterateOverGrid() {
     val grid = Grid(2, 2)
+    var atLeastOneCellVisited = false
     for (cell: Cell in grid) {
+      atLeastOneCellVisited = true
       assertThat(cell).isNotNull()
     }
+    assertThat(atLeastOneCellVisited).isTrue()
   }
 
   @Test
   fun simpleBinaryTreeTest() {
     val grid = Grid(4, 4)
+    var atLeastOneCellVisited = false
     for (cell in grid) {
+      atLeastOneCellVisited = true
       assertThat(cell.linksAsSet()).isEmpty()
     }
+    assertThat(atLeastOneCellVisited).isTrue()
+    atLeastOneCellVisited = false
     for (cell in grid.binaryTree()) {
+      atLeastOneCellVisited = true
       assertThat(cell.linksAsSet()).isNotEmpty()
     }
+    assertThat(atLeastOneCellVisited).isTrue()
   }
 }
