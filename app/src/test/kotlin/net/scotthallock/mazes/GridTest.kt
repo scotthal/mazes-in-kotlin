@@ -32,17 +32,17 @@ class GridTest {
   @Test
   fun simpleBinaryTreeTest() {
     val grid = Grid(4, 4)
-    var atLeastOneCellVisited = false
+    var cellsVisited = 0
     for (cell in grid) {
-      atLeastOneCellVisited = true
+      cellsVisited++
       assertThat(cell.linksAsSet()).isEmpty()
     }
-    assertThat(atLeastOneCellVisited).isTrue()
-    atLeastOneCellVisited = false
+    assertThat(cellsVisited).isEqualTo(16)
+    cellsVisited = 0
     for (cell in grid.binaryTree()) {
-      atLeastOneCellVisited = true
+      cellsVisited++
       assertThat(cell.linksAsSet()).isNotEmpty()
     }
-    assertThat(atLeastOneCellVisited).isTrue()
+    assertThat(cellsVisited).isEqualTo(16)
   }
 }
