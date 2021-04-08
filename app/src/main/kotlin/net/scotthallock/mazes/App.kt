@@ -1,5 +1,5 @@
 package net.scotthallock.mazes
 
 fun main() {
-  println("Hello World!")
+  println(Grid(4, 4).binaryTree())
 }

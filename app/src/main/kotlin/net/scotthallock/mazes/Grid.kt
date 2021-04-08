@@ -32,6 +32,41 @@ class Grid(val rowCount: Int, val columnCount: Int) {
       }
     }
   }
+
+  override fun toString(): String {
+    val outputBuilder = StringBuilder("+")
+    for (column in 0 until columnCount) {
+      outputBuilder.append("---+")
+    }
+    outputBuilder.appendLine()
+
+    val fakeCell = Cell(-1, -1)
+    for (row in 0 until rowCount) {
+      val topBuilder = StringBuilder("|")
+      val bottomBuilder = StringBuilder("+")
+
+      for (column in 0 until columnCount) {
+        val body = "   "
+        val eastBoundary =
+          if ((grid[row][column].east) != null && grid[row][column].isLinkedTo(
+              grid[row][column].east ?: fakeCell
+            )
+          ) " " else "|"
+        topBuilder.append(body).append(eastBoundary)
+
+        val southBoundary = if ((grid[row][column].south) != null && grid[row][column].isLinkedTo(
+            grid[row][column].south ?: fakeCell
+          )
+        ) "   " else "---"
+        val corner = "+"
+        bottomBuilder.append(southBoundary).append(corner)
+      }
+      outputBuilder.appendLine(topBuilder)
+      outputBuilder.appendLine(bottomBuilder)
+    }
+
+    return outputBuilder.toString()
+  }
 }
 
 fun Grid.binaryTree(): Grid {
