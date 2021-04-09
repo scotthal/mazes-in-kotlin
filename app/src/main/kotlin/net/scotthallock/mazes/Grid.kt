@@ -60,6 +60,38 @@ class Grid(val rowCount: Int, val columnCount: Int) {
 
     return outputBuilder.toString()
   }
+
+  fun toSvg(cellSize: Int = 20): String {
+    val imageWidth = cellSize * columnCount
+    val imageHeight = cellSize * rowCount
+    val outputBuilder = StringBuilder("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>")
+    outputBuilder.appendLine()
+    outputBuilder.appendLine("<svg version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" baseProfile=\"full\" width=\"${imageWidth + 1}\" height=\"${imageHeight + 1}\">")
+    outputBuilder.appendLine("<rect width=\"100%\" height=\"100%\" fill=\"white\" />")
+
+    for (cell in this) {
+      val left = cell.column * cellSize
+      val top = cell.row * cellSize
+      val right = (cell.column + 1) * cellSize
+      val bottom = (cell.row + 1) * cellSize
+
+      if (cell.north == Cell.sentinelCell) {
+        outputBuilder.appendLine("<line x1=\"${left}\" y1=\"${top}\" x2=\"${right}\" y2=\"${top}\" stroke=\"black\" stroke-width=\"1\" />")
+      }
+      if (cell.west == Cell.sentinelCell) {
+        outputBuilder.appendLine("<line x1=\"${left}\" y1=\"${top}\" x2=\"${left}\" y2=\"${bottom}\" stroke=\"black\" stroke-width=\"1\" />")
+      }
+      if (!cell.isLinkedTo(cell.east)) {
+        outputBuilder.appendLine("<line x1=\"${right}\" y1=\"${top}\" x2=\"${right}\" y2=\"${bottom}\" stroke=\"black\" stroke-width=\"1\" />")
+      }
+      if (!cell.isLinkedTo(cell.south)) {
+        outputBuilder.appendLine("<line x1=\"${left}\" y1=\"${bottom}\" x2=\"${right}\" y2=\"${bottom}\" stroke=\"black\" stroke-width=\"1\" />")
+      }
+    }
+
+    outputBuilder.appendLine("</svg>")
+    return outputBuilder.toString()
+  }
 }
 
 fun Grid.binaryTree(): Grid {
