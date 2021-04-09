@@ -1,13 +1,13 @@
 package net.scotthallock.mazes
 
 class Cell(val row: Int, val column: Int) {
-  var north: Cell = sentinelCell
-  var south: Cell = sentinelCell
-  var east: Cell = sentinelCell
-  var west: Cell = sentinelCell
+  var north: Cell = sentinel
+  var south: Cell = sentinel
+  var east: Cell = sentinel
+  var west: Cell = sentinel
 
   companion object {
-    val sentinelCell = Cell(-1, -1)
+    val sentinel = Cell(-1, -1)
   }
 
   private val links: MutableMap<Cell, Boolean> = mutableMapOf()
@@ -29,5 +29,5 @@ class Cell(val row: Int, val column: Int) {
   fun linksAsSet() = links.keys
   fun isLinkedTo(cell: Cell) = links.containsKey(cell)
 
-  fun neighbors(): List<Cell> = listOf(north, south, east, west).filter({it != sentinelCell})
+  fun neighbors(): List<Cell> = listOf(north, south, east, west).filter({it != sentinel})
 }

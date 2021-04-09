@@ -75,10 +75,10 @@ class Grid(val rowCount: Int, val columnCount: Int) {
       val right = (cell.column + 1) * cellSize
       val bottom = (cell.row + 1) * cellSize
 
-      if (cell.north == Cell.sentinelCell) {
+      if (cell.north == Cell.sentinel) {
         outputBuilder.appendLine("<line x1=\"${left}\" y1=\"${top}\" x2=\"${right}\" y2=\"${top}\" stroke=\"black\" stroke-width=\"1\" />")
       }
-      if (cell.west == Cell.sentinelCell) {
+      if (cell.west == Cell.sentinel) {
         outputBuilder.appendLine("<line x1=\"${left}\" y1=\"${top}\" x2=\"${left}\" y2=\"${bottom}\" stroke=\"black\" stroke-width=\"1\" />")
       }
       if (!cell.isLinkedTo(cell.east)) {
@@ -97,15 +97,15 @@ class Grid(val rowCount: Int, val columnCount: Int) {
 fun Grid.binaryTree(): Grid {
   for (cell in this) {
     when {
-      (cell.north != Cell.sentinelCell) && (cell.east != Cell.sentinelCell) -> {
+      (cell.north != Cell.sentinel) && (cell.east != Cell.sentinel) -> {
         if (Random.nextInt(0, 100) < 50) {
           cell.link(cell.north)
         } else {
           cell.link(cell.east)
         }
       }
-      cell.north != Cell.sentinelCell -> cell.link(cell.north)
-      cell.east != Cell.sentinelCell -> cell.link(cell.east)
+      cell.north != Cell.sentinel -> cell.link(cell.north)
+      cell.east != Cell.sentinel -> cell.link(cell.east)
       else -> {}
     }
   }
@@ -117,12 +117,12 @@ fun Grid.sidewinder(): Grid {
   for (cell in this) {
     run.add(cell)
 
-    val atEasternBoundary = (cell.east == Cell.sentinelCell)
-    val atNorthernBoundary = (cell.north == Cell.sentinelCell)
+    val atEasternBoundary = (cell.east == Cell.sentinel)
+    val atNorthernBoundary = (cell.north == Cell.sentinel)
     val shouldCloseOut = atEasternBoundary || (!atNorthernBoundary && Random.nextInt(0, 2) == 0)
     if (shouldCloseOut) {
       val member = run.random()
-      if (member.north != Cell.sentinelCell) member.link(member.north)
+      if (member.north != Cell.sentinel) member.link(member.north)
       run.clear()
     } else {
       cell.link(cell.east)
