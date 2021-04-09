@@ -79,3 +79,22 @@ fun Grid.binaryTree(): Grid {
   }
   return this
 }
+
+fun Grid.sidewinder(): Grid {
+  val run: MutableList<Cell> = mutableListOf()
+  for (cell in this) {
+    run.add(cell)
+
+    val atEasternBoundary = (cell.east == Cell.sentinelCell)
+    val atNorthernBoundary = (cell.north == Cell.sentinelCell)
+    val shouldCloseOut = atEasternBoundary || (!atNorthernBoundary && Random.nextInt(0, 2) == 0)
+    if (shouldCloseOut) {
+      val member = run.random()
+      if (member.north != Cell.sentinelCell) member.link(member.north)
+      run.clear()
+    } else {
+      cell.link(cell.east)
+    }
+  }
+  return this
+}

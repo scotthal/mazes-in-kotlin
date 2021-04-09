@@ -45,4 +45,21 @@ class GridTest {
     }
     assertThat(cellsVisited).isEqualTo(16)
   }
+
+  @Test
+  fun simpleSidewinderTest() {
+    val grid = Grid(4, 4)
+    var cellsVisited = 0
+    for (cell in grid) {
+      cellsVisited++
+      assertThat(cell.linksAsSet()).isEmpty()
+    }
+    assertThat(cellsVisited).isEqualTo(16)
+    cellsVisited = 0
+    for (cell in grid.sidewinder()) {
+      cellsVisited++
+      assertThat(cell.linksAsSet()).isNotEmpty()
+    }
+    assertThat(cellsVisited).isEqualTo(16)
+  }
 }
