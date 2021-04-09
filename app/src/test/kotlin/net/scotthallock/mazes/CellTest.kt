@@ -12,12 +12,12 @@ class CellTest {
   }
 
   @Test
-  fun cellHasNullNeighbors() {
+  fun cellHasSentinelNeighbors() {
     val cell = Cell(0, 0)
-    assertThat(cell.north).isNull()
-    assertThat(cell.south).isNull()
-    assertThat(cell.east).isNull()
-    assertThat(cell.west).isNull()
+    assertThat(cell.north).isEqualTo(Cell.sentinelCell)
+    assertThat(cell.south).isEqualTo(Cell.sentinelCell)
+    assertThat(cell.east).isEqualTo(Cell.sentinelCell)
+    assertThat(cell.west).isEqualTo(Cell.sentinelCell)
   }
 
   @Test
@@ -27,23 +27,23 @@ class CellTest {
 
     cell.north = neighbor
     assertThat(cell.north).isSameInstanceAs(neighbor)
-    cell.north = null
-    assertThat(cell.north).isNull()
+    cell.north = Cell.sentinelCell
+    assertThat(cell.north).isEqualTo(Cell.sentinelCell)
 
     cell.south = neighbor
     assertThat(cell.south).isSameInstanceAs(neighbor)
-    cell.south = null
-    assertThat(cell.south).isNull()
+    cell.south = Cell.sentinelCell
+    assertThat(cell.south).isEqualTo(Cell.sentinelCell)
 
     cell.east = neighbor
     assertThat(cell.east).isSameInstanceAs(neighbor)
-    cell.east = null
-    assertThat(cell.east).isNull()
+    cell.east = Cell.sentinelCell
+    assertThat(cell.east).isEqualTo(Cell.sentinelCell)
 
     cell.west = neighbor
     assertThat(cell.west).isSameInstanceAs(neighbor)
-    cell.west = null
-    assertThat(cell.west).isNull()
+    cell.west = Cell.sentinelCell
+    assertThat(cell.west).isEqualTo(Cell.sentinelCell)
   }
 
   @Test
@@ -98,22 +98,22 @@ class CellTest {
     assertThat(cell.neighbors()).isEmpty()
     cell.north = neighbor
     assertThat(cell.neighbors()).containsExactly(neighbor)
-    cell.north = null
+    cell.north = Cell.sentinelCell
     assertThat(cell.neighbors()).isEmpty()
 
     cell.south = neighbor
     assertThat(cell.neighbors()).containsExactly(neighbor)
-    cell.south = null
+    cell.south = Cell.sentinelCell
     assertThat(cell.neighbors()).isEmpty()
 
     cell.east = neighbor
     assertThat(cell.neighbors()).containsExactly(neighbor)
-    cell.east = null
+    cell.east = Cell.sentinelCell
     assertThat(cell.neighbors()).isEmpty()
 
     cell.west = neighbor
     assertThat(cell.neighbors()).containsExactly(neighbor)
-    cell.west = null
+    cell.west = Cell.sentinelCell
     assertThat(cell.neighbors()).isEmpty()
   }
 
@@ -131,21 +131,21 @@ class CellTest {
     assertThat(cell.neighbors()).hasSize(2)
     assertThat(cell.neighbors()).contains(neighbor)
     assertThat(cell.neighbors()).contains(otherNeighbor)
-    cell.south = null
+    cell.south = Cell.sentinelCell
     assertThat(cell.neighbors()).containsExactly(neighbor)
 
     cell.east = otherNeighbor
     assertThat(cell.neighbors()).hasSize(2)
     assertThat(cell.neighbors()).contains(neighbor)
     assertThat(cell.neighbors()).contains(otherNeighbor)
-    cell.east = null
+    cell.east = Cell.sentinelCell
     assertThat(cell.neighbors()).containsExactly(neighbor)
 
     cell.west = otherNeighbor
     assertThat(cell.neighbors()).hasSize(2)
     assertThat(cell.neighbors()).contains(neighbor)
     assertThat(cell.neighbors()).contains(otherNeighbor)
-    cell.west = null
+    cell.west = Cell.sentinelCell
     assertThat(cell.neighbors()).containsExactly(neighbor)
   }
 }

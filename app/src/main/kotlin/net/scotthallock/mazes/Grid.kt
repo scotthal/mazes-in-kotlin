@@ -40,7 +40,6 @@ class Grid(val rowCount: Int, val columnCount: Int) {
     }
     outputBuilder.appendLine()
 
-    val fakeCell = Cell(-1, -1)
     for (row in 0 until rowCount) {
       val topBuilder = StringBuilder("|")
       val bottomBuilder = StringBuilder("+")
@@ -48,16 +47,10 @@ class Grid(val rowCount: Int, val columnCount: Int) {
       for (column in 0 until columnCount) {
         val body = "   "
         val eastBoundary =
-          if ((grid[row][column].east) != null && grid[row][column].isLinkedTo(
-              grid[row][column].east ?: fakeCell
-            )
-          ) " " else "|"
+          if (grid[row][column].isLinkedTo(grid[row][column].east)) " " else "|"
         topBuilder.append(body).append(eastBoundary)
 
-        val southBoundary = if ((grid[row][column].south) != null && grid[row][column].isLinkedTo(
-            grid[row][column].south ?: fakeCell
-          )
-        ) "   " else "---"
+        val southBoundary = if (grid[row][column].isLinkedTo(grid[row][column].south)) "   " else "---"
         val corner = "+"
         bottomBuilder.append(southBoundary).append(corner)
       }
@@ -72,15 +65,15 @@ class Grid(val rowCount: Int, val columnCount: Int) {
 fun Grid.binaryTree(): Grid {
   for (cell in this) {
     when {
-      (cell.north != null) && (cell.east != null) -> {
+      (cell.north != Cell.sentinelCell) && (cell.east != Cell.sentinelCell) -> {
         if (Random.nextInt(0, 100) < 50) {
-          cell.link(cell.north!!)
+          cell.link(cell.north)
         } else {
-          cell.link(cell.east!!)
+          cell.link(cell.east)
         }
       }
-      cell.north != null -> cell.link(cell.north!!)
-      cell.east != null -> cell.link(cell.east!!)
+      cell.north != Cell.sentinelCell -> cell.link(cell.north)
+      cell.east != Cell.sentinelCell -> cell.link(cell.east)
       else -> {}
     }
   }
